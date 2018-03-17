@@ -1,0 +1,42 @@
+body {
+    background-color: black;
+}
+
+.game {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -300px;
+    margin-left: -400px;
+    width: 800px;
+    height: 600px;
+    border-style: solid;
+    border-width: 2px;
+    color: white;
+    background-color: rgb(1, 15, 35);
+    font-family: Tahoma, Calibri, Verdana, Geneva, sans-serif;
+  }
+
+.innergame {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#playButton {
+    margin-top: 25px;
+}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+    padding: 2px;
+}
+
+a.button.startButton {
+    margin-top: 25px;
+}

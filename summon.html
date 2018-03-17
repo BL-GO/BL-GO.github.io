@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="game">
+  <div class="innergame">
+    <p id = "quartz"> Saint Quartz:</p>
+    <img id="rateUpImage" style="" src="assets/images/rateup1.jpg" height="450" width="800">
+    <img id="summonImage" style="display: none" src="https://media.giphy.com/media/l3V0gHdi1hRHHaQa4/giphy.gif" height="450" width="800">
+    <p id="name" style="font-weight: 800; font-size: 48px"></p>
+    </br>
+    <button type="button" id="summonButton" style="display: true" onclick="summon()">Summon</button>
+    </br>
+    </br>
+    Servants Owned:
+    <p id = "servantsOwned" style=""></p>
+  </div>
+</div>
+
+</body>
+</html>
+
+<script>
+
+  var audio = new Audio('assets/music/summon.mp3');
+  //audio.play();
+
+  var quartz = JSON.parse(localStorage.getItem('blgo_quartz')) || 100;
+  var users = ["Strife", "Spinach", "Kirby", "SeiKeo", "i3uster"];
+  var owned = JSON.parse(localStorage.getItem('blgo_save')) || [];
+
+  document.getElementById("quartz").innerHTML = ("Saint Quartz: " + (quartz));
+
+  function summon() {
+    if (quartz > 0) {
+        document.getElementById("rateUpImage").style.display= "none";
+        result = users[Math.floor((Math.random() * users.length))]
+        showAndHideSummoningElements(result);
+        document.getElementById("name").innerHTML = result;
+        document.getElementById("quartz").innerHTML = ("Saint Quartz: " + (quartz - 1));
+        quartz--;
+        document.getElementById("servantsOwned").innerHTML = (listServants().join(", "));
+        // Put the object into storage
+        localStorage.setItem('blgo_save', JSON.stringify(owned));
+        localStorage.setItem('blgo_quartz', JSON.stringify(quartz));
+    };
+  }
+
+  function listServants() {
+    var unique = owned.filter(function(elem, index, self) {
+      return index === self.indexOf(elem);
+    })
+    return unique;
+  }
+
+  function showAndHideSummoningElements(){
+    document.getElementById("name").style.display = ("none");
+    document.getElementById("summonImage").style.display = ("");
+    document.getElementById("summonButton").style.display = ("none");
+
+    var imageHidden;
+
+    setTimeout(function(){
+      document.getElementById("summonImage").style.display= imageHidden ? "" : "none";
+      document.getElementById("name").style.display= imageHidden ? "none" : "";
+      document.getElementById("summonButton").style.display= imageHidden ? "none" : "";
+      imageHidden = !imageHidden;
+      owned.push(result);
+    }, 2500);
+  }
+
+
+
+var person = {
+    firstName:"John",
+    lastName:"Doe",
+    age:50,
+    eyeColor:"blue"
+};
+
+</script>
