@@ -74,13 +74,13 @@
     document.getElementById("servantsOwned").style.display = ("none");
     document.getElementById("avatar").style.display = ("none");
     if (servants[name].avatar == "yes") {
-      document.getElementById("avatar").src = "assets/images/avatars/" + name + ".png";
+      document.getElementById("avatar").src = "assets/images/avatars/" + name.toLowerCase() + ".png";
     }
     else if (servants[name].avatar == "gif") {
-      document.getElementById("avatar").src = "assets/images/avatars/" + name + ".gif";
+      document.getElementById("avatar").src = "assets/images/avatars/" + name.toLowerCase() + ".gif";
     }
     else if (servants[name].avatar == "jpg") {
-      document.getElementById("avatar").src = "assets/images/avatars/" + name + ".jpg";
+      document.getElementById("avatar").src = "assets/images/avatars/" + name.toLowerCase() + ".jpg";
     }
     else if (servants[name].avatar == "banned") {
       document.getElementById("avatar").src = "assets/images/avatars/unknown.gif";
