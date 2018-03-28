@@ -160,7 +160,6 @@
     document.getElementById("class").innerHTML = "Class: " + servants[name].class;
     document.getElementById("rating").innerHTML = "Star Rating: " + servants[name].rating;
     document.getElementById("quote").innerHTML = servants[name].quote || "";
-    document.getElementById("NP").innerHTML = "Noble Phantasm Rank: " + countInArray(owned, name);
     document.getElementById("quartz").innerHTML = ("Saint Quartz: " + (quartz - 1));
 
     document.getElementById("name").style.color = ("");
@@ -219,6 +218,7 @@
       document.getElementById("NP").style.display= imageHidden ? "none" : "";
       imageHidden = !imageHidden;
       owned.push(result);
+      document.getElementById("NP").innerHTML = "Noble Phantasm Rank: " + countInArray(owned, name);
     }, 2185);
   }
 
@@ -230,7 +230,7 @@ function countInArray(array, what) {
         }
     }
     if (count < 5) {
-      return count + 1;
+      return count;
     }
     else {
       return 5;
