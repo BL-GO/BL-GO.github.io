@@ -57,6 +57,7 @@
 
   var quartz = JSON.parse(localStorage.getItem('blgo_quartz')) || 85;
   var owned = JSON.parse(localStorage.getItem('blgo_save')) || [];
+  var result;
 
   populateMyroom();
 
@@ -67,12 +68,11 @@
         document.getElementById("rateUpImage").style.display= "none";
         result = users[Math.floor((Math.random() * users.length))]
         var name = String(result);
-        showAndHideSummoningElements(name);
+        showAndHideSummoningElements(name, result);
         quartz--;
         document.getElementById("servantsOwned").innerHTML = "Servants Owned: </br>" + (listServants().join(", "));
         localStorage.setItem('blgo_save', JSON.stringify(owned));
         localStorage.setItem('blgo_quartz', JSON.stringify(quartz));
-        populateMyroom();
     };
   }
 
@@ -97,6 +97,7 @@
   }
 
   function showMyroom() {
+    populateMyroom();
     document.getElementById("myroom").style.display = ("");
     document.getElementById("innergame").style.display = ("none");
   }
@@ -154,7 +155,7 @@
     document.getElementById("myroomRating").innerHTML = "Star Rating: " + servants[selectedServant].rating;
   }
 
-  function showAndHideSummoningElements(name){
+  function showAndHideSummoningElements(name, result){
     summonSound.play();
     document.getElementById("name").innerHTML = result;
     document.getElementById("class").innerHTML = "Class: " + servants[name].class;
