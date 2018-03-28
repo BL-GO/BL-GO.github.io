@@ -10,10 +10,11 @@
     <p id = "quartz"> Saint Quartz:</p>
     <img id="rateUpImage" style="" src="assets/images/rateup1.jpg" height="450" width="800">
     <img id="summonImage" style="display: none" src="https://media.giphy.com/media/l3V0gHdi1hRHHaQa4/giphy.gif" height="450" width="800">
+    <img id="avatar" style="display: none" src="assets/images/avatars/strife.jpg" height="" width="">
     <p id="name" style="font-weight: 800; font-size: 48px"></p>
-    <p id="rating" style="font-weight: 800; font-size: 12px; color: yellow";></p>
-    <p id="class" style="font-weight: 800; font-size: 12px; color: yellow;"></p>
-    <p id="quote" style="font-weight: 800; font-size: 12px; color: red;"></p>
+    <p id="rating" style="font-weight: 800; font-size: 12px; color: white";></p>
+    <p id="class" style="font-weight: 800; font-size: 12px; color: white;"></p>
+    <p id="quote" style="font-weight: 800; font-size: 12px; color: grey;"></p>
     </br>
     <button type="button" id="summonButton" style="display: true" onclick="summon()">Summon</button>
     </br>
@@ -28,7 +29,7 @@
 
   var summonSound = new Audio('assets/music/summonsound.mp3');
 
-  var quartz = JSON.parse(localStorage.getItem('blgo_quartz')) || 75;
+  var quartz = JSON.parse(localStorage.getItem('blgo_quartz')) || 85;
   var owned = JSON.parse(localStorage.getItem('blgo_save')) || [];
 
   document.getElementById("quartz").innerHTML = ("Saint Quartz: " + (quartz));
@@ -37,13 +38,8 @@
     if (quartz > 0) {
         document.getElementById("rateUpImage").style.display= "none";
         result = users[Math.floor((Math.random() * users.length))]
-        showAndHideSummoningElements(result);
-        document.getElementById("name").innerHTML = result;
         var name = String(result);
-        document.getElementById("class").innerHTML = "Class: " + servants[name].class;
-        document.getElementById("rating").innerHTML = "Star Rating: " + servants[name].rating;
-        document.getElementById("quote").innerHTML = servants[name].quote || "";
-        document.getElementById("quartz").innerHTML = ("Saint Quartz: " + (quartz - 1));
+        showAndHideSummoningElements(name);
         quartz--;
         document.getElementById("servantsOwned").innerHTML = "Servants Owned: " + (listServants().join(", "));
         // Put the object into storage
@@ -59,8 +55,16 @@
     return unique;
   }
 
-  function showAndHideSummoningElements(){
+  function showAndHideSummoningElements(name){
     summonSound.play();
+    document.getElementById("name").innerHTML = result;
+    document.getElementById("class").innerHTML = "Class: " + servants[name].class;
+    document.getElementById("rating").innerHTML = "Star Rating: " + servants[name].rating;
+    document.getElementById("quote").innerHTML = servants[name].quote || "";
+    document.getElementById("quartz").innerHTML = ("Saint Quartz: " + (quartz - 1));
+
+    document.getElementById("name").style.color = ("");
+    document.getElementById("name").style.textDecoration = (""); 
     document.getElementById("name").style.display = ("none");
     document.getElementById("rating").style.display = ("none");
     document.getElementById("quote").style.display = ("none");
@@ -68,6 +72,24 @@
     document.getElementById("summonImage").style.display = ("");
     document.getElementById("summonButton").style.display = ("none");
     document.getElementById("servantsOwned").style.display = ("none");
+    document.getElementById("avatar").style.display = ("none");
+    if (servants[name].avatar == "yes") {
+      document.getElementById("avatar").src = "assets/images/avatars/" + name + ".png";
+    }
+    else if (servants[name].avatar == "gif") {
+      document.getElementById("avatar").src = "assets/images/avatars/" + name + ".gif";
+    }
+    else if (servants[name].avatar == "jpg") {
+      document.getElementById("avatar").src = "assets/images/avatars/" + name + ".jpg";
+    }
+    else if (servants[name].avatar == "banned") {
+      document.getElementById("avatar").src = "assets/images/avatars/unknown.gif";
+      document.getElementById("name").style.color = ("red");
+      document.getElementById("name").style.textDecoration = ("line-through"); 
+    }
+    else {
+      document.getElementById("avatar").src = "assets/images/avatars/unknown.gif";
+    }
 
     var imageHidden;
 
@@ -79,9 +101,10 @@
       document.getElementById("quote").style.display= imageHidden ? "none" : "";
       document.getElementById("servantsOwned").style.display= imageHidden ? "none" : "";
       document.getElementById("summonButton").style.display= imageHidden ? "none" : "";
+      document.getElementById("avatar").style.display= imageHidden ? "none" : "";
       imageHidden = !imageHidden;
       owned.push(result);
-    }, 2175);
+    }, 2185);
   }
 
 
@@ -89,46 +112,53 @@ var users = [
   "Strife", "Spinach", "Kirby", "SeiKeo", "i3uster", "Kirby", "Seika",
   "Macchaos", "Petrikow", "Bridge", "Christemo", "Marma", "Nihilm",
   "Five_X", "Bloble", "Katie", "Cruor", "McJon", "Paitouch", "Lianru",
-  "Arashi_Leonheart", "Snow", "Frosty", "Frantic", "Moony", "Nachos",
+  "Arashi_Leonheart", "Snow", "Frosty", "Frantic", "Mooncake", "Nachos",
   "SpoonyViking", "Skull", "Draconic", "LVL", "Kotonoha", "Kyte",
   "Eddyak", "HenIchi", "LJ3", "Trubo", "Food", "Mike", "Crying Vegeta",
-  "Polly", "Dartz", "You", "Sesto"
+  "Polly", "Dartz", "You", "Sesto", "Tobias"
 ];
 
 var servants = {
         "Strife": {
           "rating": "* * * * *",
           "class": "Forumite",
-          "quote": "'Winky face ;)'"
+          "quote": "'Winky face ;)'",
+          "avatar": "yes"
         },
         "Spinach": {
           "rating": "* * * *",
           "class": "Moderator",
-          "quote": "'Do it, you wont'"
+          "quote": "'Do it, you wont'",
+          "avatar": "yes"
         },
         "SeiKeo": {
           "rating": "* * * *",
           "class": "Former Moderator",
-          "quote": "'What is Smart Anime.'"
+          "quote": "'What is Smart Anime.'",
+          "avatar": "yes"
         },
         "i3uster": {
           "rating": "* * * *",
           "class": "Moderator",
-          "quote": "'weed XD'"
+          "quote": "'weed XD'",
+          "avatar": "yes"
         },
         "Five_X": {
           "rating": "* * * *",
-          "class": "Moderator"
+          "class": "Moderator",
+          "avatar": "yes"
         },
         "Kirby": {
           "rating": "* * *",
           "class": "Forumite",
-          "quote": "'welp'"
+          "quote": "'welp'",
+          "avatar": "yes"
         },
         "Seika": {
           "rating": "* * * * *",
           "class": "Admin",
-          "quote": "'My tutor had to ask me if I actually worshipped Dionysus.'"
+          "quote": "'My tutor had to ask me if I actually worshipped Dionysus.'",
+          "avatar": "yes"
         },
         "Tobias": {
           "rating": "* * * * *",
@@ -138,26 +168,31 @@ var servants = {
         "Macchaos": {
           "rating": "* * * * *",
           "class": "Admin",
-          "quote": "'looool'"
+          "quote": "'looool'",
+          "avatar": "yes"
         },
         "Petrikow": {
           "rating": "* * * * *",
           "class": "Avenger",
-          "quote": "'Malk'"
+          "quote": "'Malk'",
+          "avatar": "banned"
         },
         "Bridge": {
           "rating": "* * * * *",
           "class": "Avenger",
-          "quote": "'This is just like in Harry Potter when they get the names out of the goblet of fire.'"
+          "quote": "'This is just like in Harry Potter when they get the names out of the goblet of fire.'",
+          "avatar": "banned"
         },
         "Christemo": {
           "rating": "* * * * *",
           "class": "Avenger",
-          "quote": "'Dank memes'"
+          "quote": "'Dank memes'",
+          "avatar": "banned"
         },
         "Marma": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "gif"
         },
         "Nihilm": {
           "rating": "* * *",
@@ -167,84 +202,105 @@ var servants = {
         "Bloble": {
           "rating": "*",
           "class": "Forumite",
-          "quote": "'This is what you deserve'"
+          "quote": "'This is what you deserve'",
+          "avatar": "yes"
         },
         "Katie": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "yes"
+          
         },
         "Cruor": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "yes"
         },
         "McJon": {
           "rating": "* * *",
           "class": "Forumite",
-          "quote": "'haha we're just platonic friends'"
+          "quote": "'haha we're just platonic friends'",
+          "avatar": "yes"
         },
         "Paitouch": {
           "rating": "* * *",
           "class": "Forumite",
-          "quote": "'Only took 650 quartz for NP5.'"
+          "quote": "'Only took 650 quartz for NP5.'",
+          "avatar": "yes"
         },
         "Lianru": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "yes"
         },
         "Arashi_Leonheart": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "yes"
         },
         "Snow": {
           "rating": "* * * *",
           "class": "Moderator",
-          "quote": "여보세요"
+          "quote": "여보세요",
+          "avatar": "yes"
         },
         "Frosty": {
           "rating": "* * *",
           "class": "Forumite",
-          "quote": "'I found a crowbar.'"
+          "quote": "'I found a crowbar.'",
+          "avatar": "jpg"
         },
         "Frantic": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "yes"
         },
-        "Moony": {
+        "Mooncake": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "yes"
         },
         "Nachos": {
           "rating": "* * *",
           "class": "Forumite",
-          "quote": "'See me in Blazblue'"
+          "quote": "'See me in Blazblue'",
+          "avatar": "yes"
         },
         "SpoonyViking": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "yes"
         },
         "Skull": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "jpg"
         },
         "Draconic": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "jpg"
         },
         "LVL": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "yes"
         },
         "Kotonoha": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "quote": "'omegaverse shinji'",
+          "avatar": "yes"
         },
         "Kyte": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "yes"
         },
         "Eddyak": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "jpg"
         },
         "LJ3": {
           "rating": "* * *",
@@ -252,7 +308,8 @@ var servants = {
         },
         "Trubo": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "avatar": "gif"
         },
         "HenIchi": {
           "rating": "* * *",
@@ -260,37 +317,44 @@ var servants = {
         },
         "Dartz": {
           "rating": "* * *",
-          "class": "Forumite"
+          "class": "Forumite",
+          "quote": "'Arc is stronger.'"
         },
         "Food": {
           "rating": "* * * * *",
           "class": "Avenger",
-          "quote": "'Waifufags.'"
+          "quote": "'Waifufags.'",
+          "avatar": "banned"
         },
         "Mike": {
           "rating": "* * * * *",
           "class": "Avenger",
-          "quote": "'Erm, what?'"
+          "quote": "'Erm, what?'",
+          "avatar": "banned"
         },
         "Crying Vegeta": {
           "rating": "* * * * *",
           "class": "Avenger",
-          "quote": "'get out'"
+          "quote": "'get out'",
+          "avatar": "banned"
         },
         "Polly": {
           "rating": "* * *",
           "class": "Forumite",
-          "quote": "Приве́т."
+          "quote": "Приве́т.",
+          "avatar": "jpg"
         },
         "You": {
           "rating": "* * *",
           "class": "Forumite",
-          "quote": "'Ogre like'"
+          "quote": "'Ogre like'",
+          "avatar": "yes"
         },
         "Sesto": {
           "rating": "* * *",
           "class": "Forumite",
-          "quote": "'Every day I wake up and remember Marie isn't real.'"
+          "quote": "'Every day I wake up and remember Marie isn't real.'",
+          "avatar": "yes"
         }
  }
 

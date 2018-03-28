@@ -40,3 +40,7 @@ a.button {
 a.button.startButton {
     margin-top: 25px;
 }
+
+p#name {
+    margin: 18px;
+}
