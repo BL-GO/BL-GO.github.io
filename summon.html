@@ -72,6 +72,7 @@
         document.getElementById("servantsOwned").innerHTML = "Servants Owned: </br>" + (listServants().join(", "));
         localStorage.setItem('blgo_save', JSON.stringify(owned));
         localStorage.setItem('blgo_quartz', JSON.stringify(quartz));
+        populateMyroom();
     };
   }
 
@@ -84,8 +85,11 @@
 
   function populateMyroom() {
     var x = document.getElementById("myroomSelect");
+    while (x.firstChild) {
+      x.removeChild(x.firstChild);
+}
     var a = listServants();
-    for (var index = 0; index < a.length; ++index) {
+    for (var index = 0; index < a.length; index++) {
         var option = document.createElement("option");
         option.text = a[index];
         x.add(option, x[index]);
@@ -226,7 +230,7 @@ function countInArray(array, what) {
         }
     }
     if (count < 5) {
-      return count;
+      return count + 1;
     }
     else {
       return 5;
