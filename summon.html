@@ -72,7 +72,6 @@
         document.getElementById("servantsOwned").innerHTML = "Servants Owned: </br>" + (listServants().join(", "));
         localStorage.setItem('blgo_save', JSON.stringify(owned));
         localStorage.setItem('blgo_quartz', JSON.stringify(quartz));
-        populateMyroom();
     };
   }
 
@@ -84,13 +83,6 @@
   }
 
   function populateMyroom() {
-    var z = document.getElementById("myroomSelect");
-    var b = listServants();
-    for (var index = 0; index < b.length; ++index) {
-        var option = document.createElement("option");
-        option.text = b[index];
-        z.remove(option, z[index]);
-    }
     var x = document.getElementById("myroomSelect");
     var a = listServants();
     for (var index = 0; index < a.length; ++index) {
