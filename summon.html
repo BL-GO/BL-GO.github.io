@@ -6,19 +6,45 @@
 <body>
 
 <div class="game">
-  <div class="innergame">
+  <div class="innergame" id="innergame">
     <p id = "quartz"> Saint Quartz:</p>
     <img id="rateUpImage" style="" src="assets/images/rateup1.jpg" height="450" width="800">
     <img id="summonImage" style="display: none" src="https://media.giphy.com/media/l3V0gHdi1hRHHaQa4/giphy.gif" height="450" width="800">
-    <img id="avatar" style="display: none" src="assets/images/avatars/strife.jpg" height="" width="">
+    <img id="avatar" style="display: none" src="assets/images/avatars/strife.png" height="" width="">
     <p id="name" style="font-weight: 800; font-size: 48px"></p>
     <p id="rating" style="font-weight: 800; font-size: 12px; color: white";></p>
     <p id="class" style="font-weight: 800; font-size: 12px; color: white;"></p>
+    <p id="NP" style="font-weight: 800; font-size: 12px; color: white;"></p>
     <p id="quote" style="font-weight: 800; font-size: 12px; color: grey;"></p>
     </br>
-    <button type="button" id="summonButton" style="display: true" onclick="summon()">Summon</button>
+    <button type="button" id="summonButton" style="display: true" onclick="summon()">Summon</button></br>
+    <button type="button" id="myroomButton" style="display: true" onclick="showMyroom()">My Room</button>
+    <button type="button" id="servantListButton" style="display: true" onclick="showServantList()">Spirit Origin List (Servant List)</button>
     </br>
-    <p id = "servantsOwned" style="display: none">Servants Owned:</p>
+  </div>
+  <div class="myroom" id="myroom" style="display: none">
+      <div class="myroominner">
+        My Room.
+        Pick the servant for Your Room:
+        <form>
+            <select id="myroomSelect" onchange="updateMyroom()">
+            </select>
+        </form>
+        <img id="myroomAvatar" style="display: none" src="assets/images/avatars/strife.png" height="" width="">
+      </div>
+      <div class="myroomtext">
+        <p id="myroomName" style="font-weight: 800; font-size: 24px"></p>
+        <p id="myroomRating" style="font-weight: 800; font-size: 12px; color: white";></p>
+        <p id="myroomClass" style="font-weight: 800; font-size: 12px; color: white;"></p>
+        <p id="myroomNP" style="font-weight: 800; font-size: 12px; color: white;"></p>
+        <p id="myroomQuote" style="font-weight: 800; font-size: 12px; color: grey;"></p>
+        <button type="button" id="hideMyroomButton" onclick="hideMyroom()">Back to Summoning</button>
+     </div>
+  </div>
+  <div class="servantList" id="servantList" style="display: none">
+      <div class="servantListInner">
+          <p id = "servantsOwned">Servants Owned:</p>
+          <button type="button" id="hideServantListButton" onclick="hideServantList()">Back to Summoning</button>
   </div>
 </div>
 
@@ -32,6 +58,8 @@
   var quartz = JSON.parse(localStorage.getItem('blgo_quartz')) || 85;
   var owned = JSON.parse(localStorage.getItem('blgo_save')) || [];
 
+  populateMyroom();
+
   document.getElementById("quartz").innerHTML = ("Saint Quartz: " + (quartz));
 
   function summon() {
@@ -41,8 +69,7 @@
         var name = String(result);
         showAndHideSummoningElements(name);
         quartz--;
-        document.getElementById("servantsOwned").innerHTML = "Servants Owned: " + (listServants().join(", "));
-        // Put the object into storage
+        document.getElementById("servantsOwned").innerHTML = "Servants Owned: </br>" + (listServants().join(", "));
         localStorage.setItem('blgo_save', JSON.stringify(owned));
         localStorage.setItem('blgo_quartz', JSON.stringify(quartz));
     };
@@ -55,12 +82,81 @@
     return unique;
   }
 
+  function populateMyroom() {
+    var x = document.getElementById("myroomSelect");
+    var a = listServants();
+    for (var index = 0; index < a.length; ++index) {
+        var option = document.createElement("option");
+        option.text = a[index];
+        x.add(option, x[index]);
+    }
+  }
+
+  function showMyroom() {
+    document.getElementById("myroom").style.display = ("");
+    document.getElementById("innergame").style.display = ("none");
+  }
+
+  function hideMyroom() {
+    document.getElementById("myroom").style.display = ("none");
+    document.getElementById("innergame").style.display = ("");
+  }
+
+  function showServantList() {
+    document.getElementById("servantsOwned").innerHTML = "<b>Servants Owned</b>: </br>" + (listServants().join(", "));
+    document.getElementById("servantList").style.display = ("");
+    document.getElementById("innergame").style.display = ("none");
+  }
+
+  function hideServantList() {
+    document.getElementById("servantList").style.display = ("none");
+    document.getElementById("innergame").style.display = ("");
+  }
+
+  function updateMyroom() {
+    document.getElementById("myroomName").style.color = ("");
+    var selectedServant = document.getElementById("myroomSelect").value;
+    document.getElementById("myroomName").innerHTML = selectedServant;
+    if (servants[selectedServant].avatar == "yes") {
+      document.getElementById("myroomAvatar").src = "assets/images/avatars/" + selectedServant.toLowerCase() + ".png";
+    }
+    else if (servants[selectedServant].avatar == "gif") {
+      document.getElementById("myroomAvatar").src = "assets/images/avatars/" + selectedServant.toLowerCase() + ".gif";
+    }
+    else if (servants[selectedServant].avatar == "jpg") {
+      document.getElementById("myroomAvatar").src = "assets/images/avatars/" + selectedServant.toLowerCase() + ".jpg";
+    }
+    else if (servants[selectedServant].avatar == "banned") {
+      document.getElementById("myroomAvatar").src = "assets/images/avatars/unknown.gif";
+    }
+    else {
+      document.getElementById("myroomAvatar").src = "assets/images/avatars/unknown.gif";
+    }
+
+    if (servants[selectedServant].class == "Moderator") {
+      document.getElementById("myroomName").style.color = ("#40FF40");
+    } 
+    else if (servants[selectedServant].class == "Admin") {
+      document.getElementById("myroomName").style.color = ("#00FFFF");
+    }
+    else if (servants[selectedServant].class == "Avenger") {
+      document.getElementById("myroomName").style.color = ("red");
+    }
+
+    document.getElementById("myroomQuote").innerHTML = servants[selectedServant].quote || "";
+    document.getElementById("myroomNP").innerHTML = "Noble Phantasm Rank: " + countInArray(owned, selectedServant);
+    document.getElementById("myroomAvatar").style.display = ("");
+    document.getElementById("myroomClass").innerHTML = "Class: " + servants[selectedServant].class;
+    document.getElementById("myroomRating").innerHTML = "Star Rating: " + servants[selectedServant].rating;
+  }
+
   function showAndHideSummoningElements(name){
     summonSound.play();
     document.getElementById("name").innerHTML = result;
     document.getElementById("class").innerHTML = "Class: " + servants[name].class;
     document.getElementById("rating").innerHTML = "Star Rating: " + servants[name].rating;
     document.getElementById("quote").innerHTML = servants[name].quote || "";
+    document.getElementById("NP").innerHTML = "Noble Phantasm Rank: " + countInArray(owned, name);
     document.getElementById("quartz").innerHTML = ("Saint Quartz: " + (quartz - 1));
 
     document.getElementById("name").style.color = ("");
@@ -71,8 +167,11 @@
     document.getElementById("class").style.display = ("none");
     document.getElementById("summonImage").style.display = ("");
     document.getElementById("summonButton").style.display = ("none");
+    document.getElementById("myroomButton").style.display = ("none");
+    document.getElementById("servantListButton").style.display = ("none");
     document.getElementById("servantsOwned").style.display = ("none");
     document.getElementById("avatar").style.display = ("none");
+    document.getElementById("NP").style.display = ("none");
     if (servants[name].avatar == "yes") {
       document.getElementById("avatar").src = "assets/images/avatars/" + name.toLowerCase() + ".png";
     }
@@ -110,15 +209,33 @@
       document.getElementById("quote").style.display= imageHidden ? "none" : "";
       document.getElementById("servantsOwned").style.display= imageHidden ? "none" : "";
       document.getElementById("summonButton").style.display= imageHidden ? "none" : "";
+      document.getElementById("myroomButton").style.display= imageHidden ? "none" : "";
+      document.getElementById("servantListButton").style.display= imageHidden ? "none" : "";
       document.getElementById("avatar").style.display= imageHidden ? "none" : "";
+      document.getElementById("NP").style.display= imageHidden ? "none" : "";
       imageHidden = !imageHidden;
       owned.push(result);
     }, 2185);
   }
 
+function countInArray(array, what) {
+    var count = 0;
+    for (var i = 0; i < array.length; i++) {
+        if (array[i] === what) {
+            count++;
+        }
+    }
+    if (count < 5) {
+      return count;
+    }
+    else {
+      return 5;
+    }
+}
+
 
 var users = [
-  "Strife", "Spinach", "Kirby", "SeiKeo", "i3uster", "Kirby", "Seika",
+  "Strife", "Spinach", "Kirby", "SeiKeo", "i3uster", "Seika",
   "Macchaos", "Petrikow", "Bridge", "Christemo", "Marma", "Nihilm",
   "Five_X", "Bloble", "Katie", "Cruor", "McJon", "Paitouch", "Lianru",
   "Arashi_Leonheart", "Snow", "Frosty", "Frantic", "Mooncake", "Nachos",
@@ -172,7 +289,8 @@ var servants = {
         "Tobias": {
           "rating": "* * * * *",
           "class": "Admin",
-          "quote": "'No Zero, please.'"
+          "quote": "'No Zero, please.'",
+          "avatar": "jpg"
         },
         "Macchaos": {
           "rating": "* * * * *",

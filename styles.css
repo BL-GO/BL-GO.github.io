@@ -27,6 +27,12 @@ body {
     margin-top: 25px;
 }
 
+#summonButton {
+    margin-bottom: 10px;
+}
+
+
+
 a.button {
     -webkit-appearance: button;
     -moz-appearance: button;
@@ -43,4 +49,33 @@ a.button.startButton {
 
 p#name {
     margin: 18px;
+}
+
+p#myroomName {
+    margin: 12px;
+}
+
+.myroomtext {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: -40px;
+}
+
+.servantListInner {
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.myroominner {
+    background-image: url("assets/images/myroom.jpg");
+    width: 800px;
+    height: 450px;
+}
+
+img#myroomAvatar {
+    margin-left: 175px;
+    margin-top: 60px;
 }
