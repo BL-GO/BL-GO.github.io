@@ -91,6 +91,15 @@
       document.getElementById("avatar").src = "assets/images/avatars/unknown.gif";
     }
 
+    if (servants[name].class == "Moderator") {
+      document.getElementById("avatar").src = "assets/images/avatars/" + name.toLowerCase() + ".png";
+      document.getElementById("name").style.color = ("#40FF40");
+    } 
+    else if (servants[name].class == "Admin") {
+      document.getElementById("avatar").src = "assets/images/avatars/" + name.toLowerCase() + ".png";
+      document.getElementById("name").style.color = ("#00FFFF");
+    }
+
     var imageHidden;
 
     setTimeout(function(){
