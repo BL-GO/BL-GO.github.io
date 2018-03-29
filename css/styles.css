@@ -70,7 +70,7 @@ p#myroomName {
 }
 
 .myroominner {
-    background-image: url("assets/images/myroom.jpg");
+    background-image: url("../assets/images/myroom.jpg");
     width: 800px;
     height: 450px;
 }

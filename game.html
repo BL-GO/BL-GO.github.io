@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="game">
+  <div class="innergame" id="innergame">
+    <p id = "quartz"> Saint Quartz:</p>
+    <img id="rateUpImage" style="" src="assets/images/rateup1.jpg" height="450" width="800">
+    <img id="summonImage" style="display: none" src="assets/images/summon.webp" height="450" width="800">
+    <img id="avatar" style="display: none" src="assets/images/avatars/strife.png" height="" width="">
+    <p id="name" style="font-weight: 800; font-size: 48px"></p>
+    <p id="rating" style="font-weight: 800; font-size: 12px; color: white";></p>
+    <p id="class" style="font-weight: 800; font-size: 12px; color: white;"></p>
+    <p id="NP" style="font-weight: 800; font-size: 12px; color: white;"></p>
+    <p id="quote" style="font-weight: 800; font-size: 12px; color: grey;"></p>
+    </br>
+    <button type="button" id="summonButton" style="display: true" onclick="summon()">Summon</button></br>
+    <button type="button" id="myroomButton" style="display: true" onclick="showMyroom()">My Room</button>
+    <button type="button" id="servantListButton" style="display: true" onclick="showServantList()">Spirit Origin List (Servant List)</button>
+    </br>
+  </div>
+
+  <div class="myroom" id="myroom" style="display: none">
+      <div class="myroominner">
+        My Room.
+        Pick the servant for Your Room:
+        <form>
+            <select id="myroomSelect" onchange="updateMyroom()">
+            </select>
+        </form>
+        <img id="myroomAvatar" style="display: none" src="assets/images/avatars/strife.png" height="" width="">
+      </div>
+      <div class="myroomtext">
+        <p id="myroomName" style="font-weight: 800; font-size: 24px"></p>
+        <p id="myroomRating" style="font-weight: 800; font-size: 12px; color: white";></p>
+        <p id="myroomClass" style="font-weight: 800; font-size: 12px; color: white;"></p>
+        <p id="myroomNP" style="font-weight: 800; font-size: 12px; color: white;"></p>
+        <p id="myroomQuote" style="font-weight: 800; font-size: 12px; color: grey;"></p>
+        <button type="button" id="hideMyroomButton" onclick="hideMyroom()">Back to Summoning</button>
+     </div>
+  </div>
+
+  <div class="servantList" id="servantList" style="display: none">
+      <div class="servantListInner">
+          <p id = "servantsOwned">Servants Owned:</p>
+          <button type="button" id="hideServantListButton" onclick="hideServantList()">Back to Summoning</button>
+  </div>
+</div>
+
+</body>
+</html>
+
+<script src="js/game.js"></script>
+<script src="js/servants.js"></script>
