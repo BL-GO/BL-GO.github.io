@@ -12,11 +12,11 @@ var summonSound = new Audio('assets/music/summonsound.mp3');
 
   document.getElementById("quartz").innerHTML = ("Saint Quartz: " + (quartz));
   function populateServants() {
-	users = Object.keys(servants);
-	users.forEach(function(name) {
-		var rating = servants[name]["rating"].split(' ').length;
-		ratings[rating].push(name);
-	});
+    users = Object.keys(servants);
+    users.forEach(function(name) {
+      var rating = servants[name]["rating"].split(' ').length;
+      ratings[rating].push(name);
+    });
   }
 
   function summon() {
@@ -150,12 +150,13 @@ var summonSound = new Audio('assets/music/summonsound.mp3');
     }
 
     if (servants[name].class == "Moderator") {
-      document.getElementById("avatar").src = "assets/images/avatars/" + name.toLowerCase() + ".png";
       document.getElementById("name").style.color = ("#40FF40");
     } 
     else if (servants[name].class == "Admin") {
-      document.getElementById("avatar").src = "assets/images/avatars/" + name.toLowerCase() + ".png";
       document.getElementById("name").style.color = ("#00FFFF");
+    }
+    else if (servants[selectedServant].class == "Avenger") {
+      document.getElementById("myroomName").style.color = ("red");
     }
 
     var imageHidden;
