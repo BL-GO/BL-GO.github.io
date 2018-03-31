@@ -3,15 +3,45 @@ var summonSound = new Audio('assets/music/summonsound.mp3');
   var quartz = JSON.parse(localStorage.getItem('blgo_quartz')) || 85;
   var owned = JSON.parse(localStorage.getItem('blgo_save')) || [];
   var result;
-
+  var users = [];
+  var ratings = {1: [], 2:[], 3:[], 4:[], 5:[]};
+  var rateup = "Strife";
+  
+  populateServants();
   populateMyroom();
 
   document.getElementById("quartz").innerHTML = ("Saint Quartz: " + (quartz));
+  function populateServants() {
+	users = Object.keys(servants);
+	users.forEach(function(name) {
+		var rating = servants[name]["rating"].split(' ').length;
+		ratings[rating].push(name);
+	});
+  }
 
   function summon() {
     if (quartz > 0) {
         document.getElementById("rateUpImage").style.display= "none";
-        result = users[Math.floor((Math.random() * users.length))]
+		var luck = Math.random();
+		var pool = []
+		if (luck <= .4) {
+			pool = ratings[1].concat(ratings[2]);
+		}
+		else if (luck <= .7) {
+			pool = ratings[3];
+		}
+		else if (luck <= 0.9) {
+			pool = ratings[4];
+		}
+		else {
+			if (Math.random() < 0.5) {
+				pool = [rateup];
+			}
+			else {
+				pool = ratings[5];
+			}
+		}
+        result = pool[Math.floor((Math.random() * pool.length))];
         var name = String(result);
         showAndHideSummoningElements(name, result);
         quartz--;
@@ -67,17 +97,8 @@ var summonSound = new Audio('assets/music/summonsound.mp3');
     document.getElementById("myroomName").style.color = ("");
     var selectedServant = document.getElementById("myroomSelect").value;
     document.getElementById("myroomName").innerHTML = selectedServant;
-    if (servants[selectedServant].avatar == "yes") {
-      document.getElementById("myroomAvatar").src = "assets/images/avatars/" + selectedServant.toLowerCase() + ".png";
-    }
-    else if (servants[selectedServant].avatar == "gif") {
-      document.getElementById("myroomAvatar").src = "assets/images/avatars/" + selectedServant.toLowerCase() + ".gif";
-    }
-    else if (servants[selectedServant].avatar == "jpg") {
-      document.getElementById("myroomAvatar").src = "assets/images/avatars/" + selectedServant.toLowerCase() + ".jpg";
-    }
-    else if (servants[selectedServant].avatar == "banned") {
-      document.getElementById("myroomAvatar").src = "assets/images/avatars/unknown.gif";
+    if (servants[selectedServant].avatar) {
+      document.getElementById("myroomAvatar").src = "http://forums.nrvnqsr.com/image.php?u=" + servants[selectedServant]["member_id"];
     }
     else {
       document.getElementById("myroomAvatar").src = "assets/images/avatars/unknown.gif";
@@ -121,19 +142,8 @@ var summonSound = new Audio('assets/music/summonsound.mp3');
     document.getElementById("servantsOwned").style.display = ("none");
     document.getElementById("avatar").style.display = ("none");
     document.getElementById("NP").style.display = ("none");
-    if (servants[name].avatar == "yes") {
-      document.getElementById("avatar").src = "assets/images/avatars/" + name.toLowerCase() + ".png";
-    }
-    else if (servants[name].avatar == "gif") {
-      document.getElementById("avatar").src = "assets/images/avatars/" + name.toLowerCase() + ".gif";
-    }
-    else if (servants[name].avatar == "jpg") {
-      document.getElementById("avatar").src = "assets/images/avatars/" + name.toLowerCase() + ".jpg";
-    }
-    else if (servants[name].avatar == "banned") {
-      document.getElementById("avatar").src = "assets/images/avatars/unknown.gif";
-      document.getElementById("name").style.color = ("red");
-      document.getElementById("name").style.textDecoration = ("line-through"); 
+    if (servants[name].avatar) {
+      document.getElementById("avatar").src = "http://forums.nrvnqsr.com/image.php?u=" + servants[name]["member_id"];
     }
     else {
       document.getElementById("avatar").src = "assets/images/avatars/unknown.gif";
@@ -182,14 +192,3 @@ function countInArray(array, item, cap = Infinity) {
       return cap;
     }
 }
-
-
-var users = [
-  "Strife", "Spinach", "Kirby", "SeiKeo", "i3uster", "Seika",
-  "Macchaos", "Petrikow", "Bridge", "Christemo", "Marma", "Nihilm",
-  "Five_X", "Bloble", "Katie", "Cruor", "McJon", "Paitouch", "Lianru",
-  "Arashi_Leonheart", "Snow", "Frosty", "Frantic", "Mooncake", "Nachos",
-  "SpoonyViking", "Skull", "Draconic", "LVL", "Kotonoha", "Kyte",
-  "Eddyak", "HenIchi", "LJ3", "Trubo", "Food", "Mike", "Crying Vegeta",
-  "Polly", "Dartz", "You", "Sesto", "Tobias"
-];
