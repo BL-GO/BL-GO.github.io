@@ -1,11 +1,19 @@
-V1.0:	Launch
+V0.1:
+	Launch
 
-V1.1:	Bug fixes
+V0.1.1:	
+	Bug fixes
 	Additional Servant Quotes
 
-v2.0:	Adds "My Room"
+v0.2:	
+	Adds "My Room"
 	Adds Ability to see Noble Phantasm Rank of Servants
 	Adds avatars
 	Adds coloured names
 	Tidies UI
 	Bug Fixes
+
+v0.2.2
+	Adds real avatar connection - the game will use users actual BL avatar in real time
+	Adds actual rarity system to match the star system - higher stars will drop less frequently
+	Adds actual rate up system - rate up is now real!
