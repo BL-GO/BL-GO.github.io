@@ -24,7 +24,7 @@ var summonSound = new Audio('assets/music/summonsound.mp3');
         document.getElementById("rateUpImage").style.display= "none";
 		var luck = Math.random();
 		var pool = []
-		if (luck <= .4) {
+		if (luck <= .3) {
 			pool = ratings[1].concat(ratings[2]);
 		}
 		else if (luck <= .7) {
