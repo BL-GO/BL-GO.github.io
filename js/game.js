@@ -155,7 +155,7 @@ var summonSound = new Audio('assets/music/summonsound.mp3');
     else if (servants[name].class == "Admin") {
       document.getElementById("name").style.color = ("#00FFFF");
     }
-    else if (servants[selectedServant].class == "Avenger") {
+    else if (servants[name].class == "Avenger") {
       document.getElementById("myroomName").style.color = ("red");
     }
 
